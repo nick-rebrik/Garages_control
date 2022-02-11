@@ -11,21 +11,29 @@ class Garage(models.Model):
         verbose_name='Орендар',
         related_name='garage'
     )
-    tariff = models.DecimalField('Тариф')
+    tariff = models.DecimalField(
+        'Тариф',
+        max_digits=7,
+        decimal_places=2,
+    )
 
     class Meta:
-        ordering = ('numebr',)
+        ordering = ('number',)
         verbose_name = 'Гараж'
         verbose_name_plural = 'Гаражи'
 
     def __str__(self):
-        return f'{self.numebr}'
+        return f'{self.number}'
 
 
 class Renter(models.Model):
     name = models.CharField('Ім\'я Фамілія', max_length=250)
     number = models.IntegerField('Номер телефону')
-    balance = models.DecimalField('Баланс')
+    balance = models.DecimalField(
+        'Баланс',
+        max_digits=7,
+        decimal_places=2,
+    )
 
     class Meta:
         ordering = ('name',)
@@ -44,7 +52,13 @@ class Indicators(models.Model):
         verbose_name='Гараж',
         related_name='indicators'
     )
-    amount = models.DecimalField('Сумма до оплати', blank=True, null=True)
+    amount = models.DecimalField(
+        'Сумма до оплати',
+        max_digits=7,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
     date = models.DateTimeField('Дата', auto_now_add=True)
 
     class Meta:
