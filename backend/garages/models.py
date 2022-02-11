@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Garage(models.Model):
-    numebr = models.IntegerField('Номер гаражу')
+    number = models.IntegerField('Номер гаражу')
     renter = models.ForeignKey(
         'Renter',
         on_delete=models.SET_NULL,
