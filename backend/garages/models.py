@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -27,12 +29,15 @@ class Garage(models.Model):
 
 
 class Renter(models.Model):
-    name = models.CharField('Ім\'я Фамілія', max_length=250)
-    number = models.IntegerField('Номер телефону')
+    name = models.CharField('Ім\'я та Фамілія', max_length=250)
+    number = models.CharField('Номер телефону', max_length=11)
     balance = models.DecimalField(
         'Баланс',
         max_digits=7,
         decimal_places=2,
+        default='0.00',
+        blank=True,
+        null=True,
     )
 
     class Meta:
@@ -65,3 +70,6 @@ class Indicators(models.Model):
         ordering = ('-date',)
         verbose_name = 'Показник лічильника'
         verbose_name_plural = 'Показники лічильника'
+
+    def __str__(self):
+        return f'Гараж №{self.garage}. {datetime.date(self.date)}'
