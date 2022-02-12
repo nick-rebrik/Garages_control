@@ -36,7 +36,6 @@ class Renter(models.Model):
         max_digits=7,
         decimal_places=2,
         default='0.00',
-        blank=True,
         null=True,
     )
 
@@ -61,6 +60,7 @@ class Indicators(models.Model):
         'Сумма до оплати',
         max_digits=7,
         decimal_places=2,
+        default='0.00',
         blank=True,
         null=True
     )
