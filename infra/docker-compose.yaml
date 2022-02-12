@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  web:
+      image: nickrebrik/garage-backend:v1
+      ports:
+        - 80:8000
+      restart: always
+      volumes:
+        - static_value:/var/html/static/
+        - media_value:/var/html/media/
+
+volumes:
+  static_value:
+  media_value:
