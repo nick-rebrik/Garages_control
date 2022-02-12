@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 
@@ -7,7 +8,7 @@ SECRET_KEY = 'django-insecure-_w%a#3b8y$-klto9nznfic*em7=6v+!(08&f@i!-8dh_a_2^lv
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['18.116.241.174', '*']
 
 INSTALLED_APPS = [
     # Default apps
@@ -25,6 +26,10 @@ INSTALLED_APPS = [
     # Connected apps
     'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%d/%m/%Y %H:%M:%S",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -104,6 +109,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '/var/html/static/')
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "/var/html/media/")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
