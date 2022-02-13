@@ -23,6 +23,7 @@ class RenterReadSerializer(RenterCreateAndUpdateSerializer):
     class Meta:
         model = Renter
         fields = (
+            'id',
             'name',
             'number',
             'balance',
@@ -40,6 +41,7 @@ class GarageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Garage
         fields = (
+            'id',
             'number',
             'renter',
             'tariff',
@@ -55,6 +57,7 @@ class IndicatorsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Indicators
         fields = (
+            'id',
             'garage',
             'indicator',
             'amount',
