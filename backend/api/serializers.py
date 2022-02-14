@@ -14,7 +14,7 @@ class RenterCreateAndUpdateSerializer(serializers.ModelSerializer):
         model = Renter
         fields = (
             'name',
-            'number',
+            'phone_number',
             'balance',
         )
 
@@ -25,7 +25,7 @@ class RenterReadSerializer(RenterCreateAndUpdateSerializer):
         fields = (
             'id',
             'name',
-            'number',
+            'phone_number',
             'balance',
         )
         read_only_fields = ('balance',)

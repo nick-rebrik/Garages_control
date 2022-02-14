@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Garage(models.Model):
-    number = models.IntegerField('Номер гаражу')
+    number = models.IntegerField('Номер гаражу', unique=True)
     renter = models.ForeignKey(
         'Renter',
         on_delete=models.SET_NULL,
@@ -30,7 +30,11 @@ class Garage(models.Model):
 
 class Renter(models.Model):
     name = models.CharField('Ім\'я та Фамілія', max_length=250)
-    number = models.CharField('Номер телефону', max_length=11)
+    phone_number = models.CharField(
+        'Номер телефону',
+        max_length=11,
+        unique=True
+    )
     balance = models.DecimalField(
         'Баланс',
         max_digits=7,

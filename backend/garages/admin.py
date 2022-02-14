@@ -18,7 +18,7 @@ class GarageAdmin(admin.ModelAdmin):
 class RenterAdmin(admin.ModelAdmin):
     fields = (
         'name',
-        'number',
+        'phone_number',
         'balance',
     )
     search_fields = ('name',)
