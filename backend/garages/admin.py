@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Garage, Indicators, Renter
+from .models import Garage, GarageType, Indicators, Renter
 
 
 @admin.register(Garage)
@@ -12,6 +12,15 @@ class GarageAdmin(admin.ModelAdmin):
     )
     search_fields = ('number',)
     list_display = ('number', 'renter')
+
+
+@admin.register(GarageType)
+class GarageAdmin(admin.ModelAdmin):
+    fields = (
+        'type',
+        'price',
+    )
+    list_display = ('type', 'price')
 
 
 @admin.register(Renter)

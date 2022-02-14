@@ -13,6 +13,12 @@ class Garage(models.Model):
         verbose_name='Орендар',
         related_name='garage'
     )
+    type = models.ForeignKey(
+        'GarageType',
+        on_delete=models.SET_NULL,
+        verbose_name='Тип гаражу',
+        related_name='garage'
+    )
     tariff = models.DecimalField(
         'Тариф',
         max_digits=7,
@@ -26,6 +32,22 @@ class Garage(models.Model):
 
     def __str__(self):
         return f'{self.number}'
+
+
+class GarageType(models.Model):
+    type = models.CharField('Тип гаража', max_length=125)
+    price = models.DecimalField(
+        'Орендна плата',
+        max_digits=7,
+        decimal_places=2
+    )
+
+    class Meta:
+        verbose_name = 'Тип гаражу'
+        verbose_name_plural = 'Типи гаражів'
+
+    def __str__(self):
+        return f'{self.type} - ставка {self.price}'
 
 
 class Renter(models.Model):
