@@ -15,7 +15,7 @@ class Garage(models.Model):
     )
     type = models.ForeignKey(
         'GarageType',
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         verbose_name='Тип гаражу',
         related_name='garage'
     )
@@ -47,7 +47,7 @@ class GarageType(models.Model):
         verbose_name_plural = 'Типи гаражів'
 
     def __str__(self):
-        return f'{self.type} - ставка {self.price}'
+        return f'{self.type} - {self.price} грн.'
 
 
 class Renter(models.Model):
@@ -82,13 +82,29 @@ class Indicators(models.Model):
         verbose_name='Гараж',
         related_name='indicators'
     )
+    rent_pay = models.DecimalField(
+        'Орендна плата',
+        max_digits=7,
+        decimal_places=2,
+        default='0.00',
+        blank=True,
+        null=True,
+    )
+    electricity_price = models.DecimalField(
+        'Плата за електроенергію',
+        max_digits=7,
+        decimal_places=2,
+        default='0.00',
+        blank=True,
+        null=True,
+    )
     amount = models.DecimalField(
         'Сумма до оплати',
         max_digits=7,
         decimal_places=2,
         default='0.00',
         blank=True,
-        null=True
+        null=True,
     )
     date = models.DateTimeField('Дата', auto_now_add=True)
 

@@ -19,14 +19,22 @@ def pre_save_indicators(instance, **kwargs):
     indicator = instance.indicator
     renter = instance.garage.renter
     if renter and instance.garage.indicators.exists():
+        rent_pay = instance.garage.type.price
         if instance.pk is None:
-            instance.amount = indicators_calculation(instance, indicator)
+            instance.rent_pay = rent_pay
+            instance.electricity_price = indicators_calculation(
+                instance, indicator
+            )
+            instance.amount = instance.rent_pay + instance.electricity_price
             renter.balance -= instance.amount
         else:
             renter.balance += instance.amount
-            instance.amount = indicators_calculation(instance, indicator, True)
+            instance.electricity_price = indicators_calculation(
+                instance, indicator, update=True
+            )
+            instance.amount = instance.rent_pay + instance.electricity_price
             renter.balance -= instance.amount
-    renter.save()
+        renter.save()
 
 
 @receiver(pre_delete, sender=Indicators)

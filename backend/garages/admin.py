@@ -8,6 +8,7 @@ class GarageAdmin(admin.ModelAdmin):
     fields = (
         'number',
         'renter',
+        'type',
         'tariff',
     )
     search_fields = ('number',)
@@ -39,7 +40,10 @@ class IndicatorsAdmin(admin.ModelAdmin):
     fields = (
         'garage',
         'indicator',
+        'rent_pay',
+        'electricity_price',
         'amount',
     )
+    readonly_fields = ('rent_pay', 'electricity_price', 'amount')
     search_fields = ('garage',)
     list_display = ('garage', 'indicator', 'amount', 'date')
