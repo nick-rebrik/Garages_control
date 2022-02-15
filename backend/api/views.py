@@ -1,10 +1,10 @@
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 
-from garages.models import Garage, GarageType, Renter
+from garages.models import Garage, GarageType, Payment, Renter
 from .serializers import (GarageSerializer, GarageTypeSerializer,
                           IndicatorsSerializer,
-                          RenterCreateAndUpdateSerializer,
+                          PaymentSerializer, RenterCreateAndUpdateSerializer,
                           RenterReadSerializer)
 
 
@@ -33,3 +33,8 @@ class IndicatorsViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         garage = get_object_or_404(Garage, id=self.kwargs['garage_id'])
         return garage.indicators.all()
+
+
+class PaymentViewSet(viewsets.ModelViewSet):
+    queryset = Payment.objects.all().select_related('renter')
+    serializer_class = PaymentSerializer

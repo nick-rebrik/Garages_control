@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from garages.models import Garage, GarageType, Indicators, Renter
+from garages.models import Garage, GarageType, Indicators, Payment, Renter
 
 
 class RenterCreateAndUpdateSerializer(serializers.ModelSerializer):
@@ -99,3 +99,18 @@ class IndicatorsSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Indicators.objects.create(**validated_data)
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    renter = serializers.SlugRelatedField(
+        queryset=Renter.objects.all(),
+        slug_field='name',
+    )
+
+    class Meta:
+        model = Payment
+        fields = (
+            'renter',
+            'amount',
+            'date',
+        )

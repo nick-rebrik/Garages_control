@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Garage, GarageType, Indicators, Renter
+from .models import Garage, GarageType, Indicators, Payment, Renter
 
 
 @admin.register(Garage)
@@ -53,3 +53,15 @@ class IndicatorsAdmin(admin.ModelAdmin):
     readonly_fields = ('rent_pay', 'electricity_price', 'amount')
     search_fields = ('garage',)
     list_display = ('garage', 'indicator', 'amount', 'date')
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    fields = (
+        'renter',
+        'amount',
+        'date'
+    )
+    readonly_fields = ('date',)
+    list_display = ('renter', 'amount', 'date')
+    search_fields = ('renter',)

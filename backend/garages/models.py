@@ -115,3 +115,26 @@ class Indicators(models.Model):
 
     def __str__(self):
         return f'Гараж №{self.garage}. {datetime.date(self.date)}'
+
+
+class Payment(models.Model):
+    renter = models.ForeignKey(
+        Renter,
+        on_delete=models.CASCADE,
+        verbose_name='Орендар',
+        related_name='payments'
+    )
+    amount = models.DecimalField(
+        'Сумма оплати',
+        max_digits=7,
+        decimal_places=2,
+    )
+    date = models.DateTimeField('Дата', auto_now_add=True)
+
+    class Meta:
+        ordering = ('-date',)
+        verbose_name = 'Оплата'
+        verbose_name_plural = 'Оплати'
+
+    def __str__(self):
+        return f'{self.renter} - {self.amount} грн. {datetime.date(self.date)}'
