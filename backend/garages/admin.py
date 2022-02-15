@@ -29,10 +29,16 @@ class RenterAdmin(admin.ModelAdmin):
     fields = (
         'name',
         'phone_number',
+        'rented_garages',
         'balance',
     )
+    readonly_fields = ('rented_garages',)
     search_fields = ('name',)
     list_display = ('name', 'balance')
+
+    def rented_garages(self, renter_object):
+        garage = renter_object.garage.all()
+        return ', '.join((str(item.number) for item in garage))
 
 
 @admin.register(Indicators)
