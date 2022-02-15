@@ -20,7 +20,7 @@ class Garage(models.Model):
         related_name='garage'
     )
     tariff = models.DecimalField(
-        'Тариф',
+        'Тариф за електроенергію',
         max_digits=7,
         decimal_places=2,
     )
@@ -28,7 +28,7 @@ class Garage(models.Model):
     class Meta:
         ordering = ('number',)
         verbose_name = 'Гараж'
-        verbose_name_plural = 'Гаражи'
+        verbose_name_plural = 'Гаражі'
 
     def __str__(self):
         return f'{self.number}'
