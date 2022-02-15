@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
 
-from .models import Indicators
+from .models import Indicators, Payment
 
 
 def indicators_calculation(instance, indicator, update=None):
@@ -43,3 +43,15 @@ def pre_delete_indicators(instance, **kwargs):
     if renter:
         renter.balance += instance.amount or 0
         renter.save()
+
+
+@receiver(pre_save, sender=Payment)
+def pre_save_payments(instance, **kwargs):
+    instance.renter.balance += instance.amount
+    instance.renter.save()
+
+
+@receiver(pre_delete, sender=Payment)
+def pre_delete_payments(instance, **kwargs):
+    instance.renter.balance -= instance.amount
+    instance.renter.save()
