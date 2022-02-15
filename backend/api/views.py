@@ -1,16 +1,21 @@
 from rest_framework import viewsets
-
-from garages.models import Garage, Renter
 from rest_framework.generics import get_object_or_404
 
-from .serializers import (GarageSerializer, IndicatorsSerializer,
+from garages.models import Garage, GarageType, Renter
+from .serializers import (GarageSerializer, GarageTypeSerializer,
+                          IndicatorsSerializer,
                           RenterCreateAndUpdateSerializer,
                           RenterReadSerializer)
 
 
 class GarageViewSet(viewsets.ModelViewSet):
-    queryset = Garage.objects.all().select_related('renter')
+    queryset = Garage.objects.all().select_related('renter', 'type')
     serializer_class = GarageSerializer
+
+
+class GarageTypeViewSet(viewsets.ModelViewSet):
+    queryset = GarageType.objects.all()
+    serializer_class = GarageTypeSerializer
 
 
 class RenterViewSet(viewsets.ModelViewSet):

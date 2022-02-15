@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from garages.models import Garage, Renter, Indicators
+from garages.models import Garage, GarageType, Indicators, Renter
 
 
 class RenterCreateAndUpdateSerializer(serializers.ModelSerializer):
@@ -19,16 +19,14 @@ class RenterCreateAndUpdateSerializer(serializers.ModelSerializer):
         )
 
 
-class RenterReadSerializer(RenterCreateAndUpdateSerializer):
+class GarageTypeSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Renter
+        model = GarageType
         fields = (
-            'id',
-            'name',
-            'phone_number',
-            'balance',
+            'type',
+            'price',
         )
-        read_only_fields = ('balance',)
 
 
 class GarageSerializer(serializers.ModelSerializer):
@@ -48,6 +46,33 @@ class GarageSerializer(serializers.ModelSerializer):
         )
 
 
+class ShortGarageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Garage
+        fields = (
+            'id',
+            'number',
+        )
+
+
+class RenterReadSerializer(RenterCreateAndUpdateSerializer):
+    rented_garages = ShortGarageSerializer(
+        source='garage', many=True, read_only=True
+    )
+
+    class Meta:
+        model = Renter
+        fields = (
+            'id',
+            'name',
+            'phone_number',
+            'rented_garages',
+            'balance',
+        )
+        read_only_fields = ('balance',)
+
+
 class IndicatorsSerializer(serializers.ModelSerializer):
     garage = serializers.SlugRelatedField(
         queryset=Garage.objects.all(),
@@ -60,10 +85,14 @@ class IndicatorsSerializer(serializers.ModelSerializer):
             'id',
             'garage',
             'indicator',
+            'rent_pay',
+            'electricity_price',
             'amount',
             'date',
         )
         read_only_fields = (
+            'rent_pay',
+            'electricity_price',
             'amount',
             'date',
         )
